@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import com.example.demo.models.Patient;
 import com.example.demo.models.User;
 
-public interface PatientRepository extends JpaRepository<Patient, Integer>{
+public interface PatientRepository extends JpaRepository<Patient, Long>{
 
 	Patient findByEmailId(@Param("email") String email);
 	boolean existsByEmail(String email);

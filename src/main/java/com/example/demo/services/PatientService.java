@@ -114,12 +114,12 @@ public class PatientService implements PatientServiceInterface {
 		patRep.delete(p);		
 	}
 	@Override
-	public void deletePatientById(int id) {
+	public void deletePatientById(Long id) {
 		patRep.deleteById(id);
 		
 	}
 	@Override
-	public Patient getPatient(int id) {
+	public Patient getPatient(Long id) {
 		return patRep.findById(id).get();
 	}
 	@Override

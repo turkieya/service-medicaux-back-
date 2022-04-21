@@ -18,24 +18,31 @@ public class Medecin extends User implements Serializable{
 	@Column(name = "matricule")
 	 private int matricule ; 
 
-	@Column(name = "statut")
-    private String statut ;
+	@Column(name = "specialite")
+    private String specialite ;
 	
 	@Column(name = "prix_consultation")
     private float prix_consult;
 	 
+	@OneToMany(mappedBy="medecin")
+	private List<Horaires_disp> horaires;
+	@ManyToMany(cascade = CascadeType.ALL, mappedBy="med")
+    private Set<Patient> pat;
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private Categorie cat;
+	
 	 @Override
 	public String toString() {
-		return "Medecin ["+super.toString()+"matricule=" + matricule + ", statut=" + statut + ", prix_consult=" + prix_consult + "]";
+		return "Medecin ["+super.toString()+"matricule=" + matricule + ", statut=" + specialite + ", prix_consult=" + prix_consult + "]";
 	}
 	
 	public int getMatricule() {
 		return matricule;
 	}
-	 public Medecin (String nom , String prenom, String email , String password , String sexe, int matricule,String statut, float prix_consult) {
+	 public Medecin (String nom , String prenom, String email , String password , String sexe, int matricule,String specialite, float prix_consult) {
 		 super( nom,prenom,email,password,sexe);
 		 this.matricule=matricule;
-		 this.statut=statut;
+		 this.specialite=specialite;
 		 this.prix_consult=prix_consult;
 		 
 	 }
@@ -46,11 +53,11 @@ public class Medecin extends User implements Serializable{
 	public void setMatricule(int matricule) {
 		this.matricule = matricule;
 	}
-	public String getStatut() {
-		return statut;
+	public String getSpecialite() {
+		return specialite;
 	}
-	public void setStatut(String statut) {
-		this.statut = statut;
+	public void setSpecialite(String statut) {
+		this.specialite = statut;
 	}
 	public float getPrix_consult() {
 		return prix_consult;
@@ -58,11 +65,6 @@ public class Medecin extends User implements Serializable{
 	public void setPrix_consult(float prix_consult) {
 		this.prix_consult = prix_consult;
 	} 
-	@OneToMany(mappedBy="medecin")
-	private List<Horaires_disp> horaires;
-	@ManyToMany(cascade = CascadeType.ALL, mappedBy="med")
-    private Set<Patient> pat;
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	private Categorie cat;
+
 	 
 }

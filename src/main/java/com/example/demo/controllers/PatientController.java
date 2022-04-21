@@ -5,6 +5,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +24,9 @@ public class PatientController implements PatientRest {
 
 	@Autowired
 	PatientService patServ;
+	
+	@Autowired
+	private JavaMailSender javaMailSender;
 	/*@Autowired
 	AuthenticationManager authMan;
 	@Autowired 
@@ -37,6 +42,11 @@ public class PatientController implements PatientRest {
 	public ResponseEntity<String> signup(Map<String, String> requestMap) {
 	
 		try {
+			SimpleMailMessage msg = new SimpleMailMessage();
+		    msg.setTo(requestMap.get("email"));
+	        msg.setSubject("Compte Ajouté");
+		    msg.setText("Pour acceder a votre compte sur MEDICO vous utilisez votre email  "+ requestMap.get("email")+" ,votre mot de passe est "+requestMap.get("password"));
+		    javaMailSender.send(msg);
 			return patServ.signup(requestMap);
 		}catch(Exception ex) {
 			ex.printStackTrace();

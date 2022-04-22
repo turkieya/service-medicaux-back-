@@ -24,20 +24,18 @@ public class Horaires_disp implements Serializable {
 	 @GeneratedValue(strategy=GenerationType.IDENTITY)
 	 private Long id;
 	 @Column(name = "debut")
-	 @Temporal(TemporalType.DATE)
-	 @JsonFormat(pattern = "yyyy-mm-dd HH:MM:SS")
-	 private Date deb;
+
+	 private String deb;
 	 @Column(name = "fin")
-	 @Temporal(TemporalType.DATE)
-	 @JsonFormat(pattern = "yyyy-mm-dd HH:MM:SS")
-     private Date fin;
+
+     private String fin;
 	 @Column(name = "duree_consultation")
 	 private int durée_consultation;
 	 @ManyToOne
 	 private Medecin medecin;
 	 @ManyToOne
 	 private Chef_Laboratoire chef_labo;
-	public Horaires_disp(Long id, Date deb, Date fin, int durée_consultation, Medecin medecin) {
+	public Horaires_disp(Long id, String deb, String fin, int durée_consultation, Medecin medecin) {
 		super();
 		this.id = id;
 		this.deb = deb;
@@ -52,20 +50,20 @@ public class Horaires_disp implements Serializable {
 	public void setMedecin(Medecin medecin) {
 		this.medecin = medecin;
 	}
-	public Date getDeb() {
+	public String getDeb() {
 		return deb;
 	}
 	@Override
 	public String toString() {
 		return "horaire [deb=" + deb + ", fin=" + fin + ", durée_consultation=" + durée_consultation + "]";
 	}
-	public void setDeb(Date deb) {
+	public void setDeb(String deb) {
 		this.deb = deb;
 	}
-	public Date getFin() {
+	public String getFin() {
 		return fin;
 	}
-	public void setFin(Date fin) {
+	public void setFin(String fin) {
 		this.fin = fin;
 	}
 	public int getDurée_consultation() {

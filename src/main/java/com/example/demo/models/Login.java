@@ -10,15 +10,16 @@ public class Login {
 	  private String email;
 	  private String password ; 
 	  private String role;
-	  private String token;
+	  private String username;
 	public Login() {
 		// TODO Auto-generated constructor stub
 	}
-	public Login(String email, String password, String role) {
+	public Login(String email, String password, String role,String username) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		this.username=username;
 	}
 	public Long getId() {
 		return id;
@@ -44,12 +45,13 @@ public class Login {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	public String getToken() {
-		return token;
+	public String getUsername() {
+		return username;
 	}
-	public void setToken(String token) {
-		this.token = token;
+	public void setUsername(String username) {
+		this.username = username;
 	}
+
 	
 
 }

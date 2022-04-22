@@ -8,9 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.demo.models.Categorie;
+import com.example.demo.models.Patient;
 import com.example.demo.repository.LoginRepository;
 import com.example.demo.services.PatientService;
 import com.example.demo.utils.medicUtils;
@@ -52,6 +54,11 @@ public class PatientController implements PatientRest {
 			ex.printStackTrace();
 		}
 		return medicUtils.getResponseEntity("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@Override
+	public Patient findPatientById (@PathVariable long id)  { 
+		return patServ.findById(id).get() ;
 	}
 	
 	/*@Override

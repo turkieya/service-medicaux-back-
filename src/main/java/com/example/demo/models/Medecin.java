@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name="medecin")
 public class Medecin extends User implements Serializable{
 	@Column(name = "matricule")
-	 private int matricule ; 
+	 private Long matricule ; 
 
 	@Column(name = "specialite")
     private String specialite ;
@@ -36,10 +36,10 @@ public class Medecin extends User implements Serializable{
 		return "Medecin ["+super.toString()+"matricule=" + matricule + ", statut=" + specialite + ", prix_consult=" + prix_consult + "]";
 	}
 	
-	public int getMatricule() {
+	public Long getMatricule() {
 		return matricule;
 	}
-	 public Medecin (String nom , String prenom, String email , String password , String sexe, int matricule,String specialite, float prix_consult) {
+	 public Medecin (String nom , String prenom, String email , String password , String sexe, Long matricule,String specialite, float prix_consult) {
 		 super( nom,prenom,email,password,sexe);
 		 this.matricule=matricule;
 		 this.specialite=specialite;
@@ -50,7 +50,7 @@ public class Medecin extends User implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public void setMatricule(int matricule) {
+	public void setMatricule(Long matricule) {
 		this.matricule = matricule;
 	}
 	public String getSpecialite() {

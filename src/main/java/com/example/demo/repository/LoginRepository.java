@@ -14,6 +14,9 @@ public interface LoginRepository extends JpaRepository<Login, Integer>{
 	@Query("select id from Patient p where p.email=:email")
 	Long findId(@Param("email") String email);
 	
+	@Query("select id from Medecin m where m.email=:email")
+	Long findMedecinId(@Param("email") String email);
+	
 	public Login findByEmailAndPassword(String email, String password);
 
 	@Modifying

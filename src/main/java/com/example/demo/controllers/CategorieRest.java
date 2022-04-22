@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.models.Categorie;
+import com.example.demo.models.Medecin;
 
 @RequestMapping("/categorie")
 public interface CategorieRest {
@@ -32,4 +33,8 @@ public interface CategorieRest {
 	
 	@DeleteMapping("/delete/{id}")
 	public void deleteCategorieById ( @PathVariable Long id);
+	
+	@GetMapping(path="/list_medecins/{id}")
+	public List<Medecin> findAllMedecinsByCategorie (@PathVariable Long id);
+
 }

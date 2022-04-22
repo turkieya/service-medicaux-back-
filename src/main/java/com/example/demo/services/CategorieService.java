@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.models.Categorie;
+import com.example.demo.models.Medecin;
 import com.example.demo.repository.CategorieRepository;
 
 @Service
@@ -33,8 +34,11 @@ public class CategorieService implements CategoriServiceInterface {
 
 	public void delete(Categorie c) {
 		catRepo.delete(c);
-	}
+	} 
 
+	public List<Medecin> findMedecins(Long id){
+		return catRepo.findMedecinId(id);
+	}
 
 
 }

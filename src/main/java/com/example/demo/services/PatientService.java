@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.example.demo.utils.medicUtils;
+import com.example.demo.models.Categorie;
 import com.example.demo.models.Login;
 import com.example.demo.models.Patient;
 import com.example.demo.repository.LoginRepository;
@@ -76,6 +78,7 @@ public class PatientService implements PatientServiceInterface {
 		user.setEmail(requestMap.get("email"));
 		//patient.setPassword(requestMap.get("password"));
 		user.setPassword(requestMap.get("password"));
+		user.setUsername(requestMap.get("nom")+" "+requestMap.get("prenom"));
 		//user.setPassword(encoder.encode(requestMap.get("password")));
 
 		user.setRole("patient");
@@ -121,6 +124,11 @@ public class PatientService implements PatientServiceInterface {
 	@Override
 	public Patient getPatient(Long id) {
 		return patRep.findById(id).get();
+	}
+	
+	@Override
+	public Optional<Patient> findById(Long id) {
+		return patRep.findById(id);
 	}
 	@Override
 	public List<Patient> getAllPatients() {

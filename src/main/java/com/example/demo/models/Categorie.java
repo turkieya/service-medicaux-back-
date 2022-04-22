@@ -1,6 +1,8 @@
 package com.example.demo.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,6 +21,9 @@ public class Categorie implements Serializable{
 	 
 	 @Column(name = "nom")
 	 private String nom ;
+	 
+		@OneToMany(cascade = CascadeType.ALL,mappedBy ="cat")
+		 private List<Medecin> med=  new ArrayList<>() ;
 	
 	@Override
 	public String toString() {
@@ -36,13 +41,13 @@ public class Categorie implements Serializable{
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public Set<Medecin> getMed() {
+	public List<Medecin> getMed() {
 		return med;
 	}
-	public void setMed(Set<Medecin> med) {
+	public void setMed(List<Medecin> med) {
 		this.med = med;
 	}
-	@OneToMany(cascade = CascadeType.ALL,mappedBy ="cat")
-	 private Set<Medecin> med;
+	
+
 
 }

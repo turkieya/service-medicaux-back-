@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Categorie;
+import com.example.demo.models.Medecin;
 import com.example.demo.services.CategorieService;
 @RestController
 public class CategorieController implements CategorieRest {
@@ -40,5 +41,10 @@ public class CategorieController implements CategorieRest {
 	@Override
 	public void deleteCategorieById ( @PathVariable Long id){
 		catServ.deleteById(id);			
+	}
+	
+	@Override
+	public List<Medecin> findAllMedecinsByCategorie (@PathVariable Long id)  { 
+		return catServ.findMedecins(id) ;
 	}
 }

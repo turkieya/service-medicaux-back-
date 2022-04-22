@@ -1,11 +1,15 @@
 package com.example.demo.services;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.models.Login;
 import com.example.demo.models.Medecin;
@@ -15,6 +19,7 @@ import com.example.demo.repository.MedecinRepository;
 import com.example.demo.repository.PatientRepository;
 import com.example.demo.utils.medicUtils;
 
+@Service
 public class MedecinService implements MedecinServiceInterface {
 
 	@Autowired
@@ -58,6 +63,10 @@ public class MedecinService implements MedecinServiceInterface {
 		medecin.setNom(requestMap.get("nom"));
 		medecin.setPrenom(requestMap.get("prenom"));
 		medecin.setEmail(requestMap.get("email"));
+		Random random = new Random();
+		Long id=random.nextLong();
+		System.out.println(id);
+		medecin.setId(id);
 		//patient.setPassword(requestMap.get("password"));
 		medecin.setPassword(requestMap.get("password"));
 		return medecin;
@@ -69,15 +78,24 @@ public class MedecinService implements MedecinServiceInterface {
 		user.setPassword(requestMap.get("password"));
 		//user.setPassword(encoder.encode(requestMap.get("password")));
 
-		user.setRole("patient");
+		user.setRole("medecin");
 		String email=requestMap.get("email");
 		System.out.println(email);
-		long n=logRepo.findId(email);
+		long n=logRepo.findMedecinId(email);
 		System.out.println(n);
 
-		user.setId(logRepo.findId(email));
+		user.setId(logRepo.findMedecinId(email));
 		
 		return user;
+	}
+	
+	public List<Medecin> findMedecins(Long id){
+		return medRepo.findMedecinId(id);
+	}
+	
+	
+	public Optional<Medecin> findById(Long id) {
+		return medRepo.findById(id);
 	}
 
 

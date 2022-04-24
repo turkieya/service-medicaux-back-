@@ -16,4 +16,7 @@ public interface CategorieRepository extends JpaRepository<Categorie, Long> {
 
 	@Query("select m from Medecin m where m.cat.id=:cat")
 	List<Medecin> findMedecinId(@Param("cat") Long cat);
+	
+	@Query("select c from Categorie c where c.nom=:nom")
+	Categorie findCategorieByNom(@Param("nom")String nom);
 }

@@ -2,15 +2,18 @@ package com.example.demo.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -25,9 +28,17 @@ public class Consultation implements Serializable{
 
 	private String commentaire;
 	private String motif; 
-	@Override
-	public String toString() {
-		return "Consultation [id=" + id + ", commentaire=" + commentaire + ", motif=" + motif + ", date=" + date + "]";
+	private String date;
+	
+	@ManyToMany(cascade = CascadeType.ALL,mappedBy ="consultations")
+	private List<Medicament> medicaments;
+	
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private Dossier_Medical dossier;
+	
+	
+	public Consultation() {
+		super();
 	}
 	public Long getId() {
 		return id;
@@ -47,15 +58,24 @@ public class Consultation implements Serializable{
 	public void setMotif(String motif) {
 		this.motif = motif;
 	}
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
-	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-mm-dd")
-	private Date date;
-	@ManyToMany(cascade = CascadeType.ALL,mappedBy ="consultations")
-	private Set<Medicament> medicaments;
+	public List<Medicament> getMedicaments() {
+		return medicaments;
+	}
+	public void setMedicaments(List<Medicament> medicaments) {
+		this.medicaments = medicaments;
+	}
+	public Dossier_Medical getDossier() {
+		return dossier;
+	}
+	public void setDossier(Dossier_Medical dossier) {
+		this.dossier = dossier;
+	}
+	
+	
 }

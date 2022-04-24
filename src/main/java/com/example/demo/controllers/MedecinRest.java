@@ -16,7 +16,7 @@ import com.example.demo.models.Medecin;
 public interface MedecinRest {
 
 	@PostMapping(path="/signup")
-	public ResponseEntity<String> signup(@RequestBody(required=true) Map<String,String>requestMap);
+	public ResponseEntity<String> signup(@RequestBody Medecin medecin);
 	
 	@GetMapping(path="/list_medecins/{id}")
 	public List<Medecin> findAllMedecinsByCategorie (@PathVariable Long id);

@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Categorie implements Serializable{
 	 @Id
@@ -23,6 +25,7 @@ public class Categorie implements Serializable{
 	 private String nom ;
 	 
 		@OneToMany(cascade = CascadeType.ALL,mappedBy ="cat")
+		@JsonIgnore
 		 private List<Medecin> med=  new ArrayList<>() ;
 	
 	@Override

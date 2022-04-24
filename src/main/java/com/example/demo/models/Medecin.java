@@ -12,6 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name="medecin")
 public class Medecin extends User implements Serializable{
@@ -25,9 +30,12 @@ public class Medecin extends User implements Serializable{
     private float prix_consult;
 	 
 	@OneToMany(mappedBy="medecin")
-	private List<Horaires_disp> horaires;
+	@JsonIgnore
+	private List<Horaire> horaires;
+	
 	@ManyToMany(cascade = CascadeType.ALL, mappedBy="med")
     private Set<Patient> pat;
+	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Categorie cat;
 	
@@ -35,6 +43,10 @@ public class Medecin extends User implements Serializable{
 	public String toString() {
 		return "Medecin ["+super.toString()+"matricule=" + matricule + ", statut=" + specialite + ", prix_consult=" + prix_consult + "]";
 	}
+	/* @JsonCreator
+	 public Medecin (@JsonProperty("medecin_id") Long medecin_id ) {
+	     this.id = medecin_id;
+	 }*/
 	
 	public Long getMatricule() {
 		return matricule;
@@ -64,6 +76,30 @@ public class Medecin extends User implements Serializable{
 	}
 	public void setPrix_consult(float prix_consult) {
 		this.prix_consult = prix_consult;
+	}
+
+	public List<Horaire> getHoraires() {
+		return horaires;
+	}
+
+	public void setHoraires(List<Horaire> horaires) {
+		this.horaires = horaires;
+	}
+
+	public Set<Patient> getPat() {
+		return pat;
+	}
+
+	public void setPat(Set<Patient> pat) {
+		this.pat = pat;
+	}
+
+	public Categorie getCat() {
+		return cat;
+	}
+
+	public void setCat(Categorie cat) {
+		this.cat = cat;
 	} 
 
 	 

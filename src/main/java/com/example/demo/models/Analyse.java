@@ -3,11 +3,14 @@ package com.example.demo.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,9 +25,12 @@ public class Analyse implements Serializable{
 
 	private String nom;
 	private String resultat; 
-	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-mm-dd")
-	private Date date;
+	private String date;
+	
+	 @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private Dossier_Medical dossier;
+
+	
 	@Override
 	public String toString() {
 		return "Analyse [id=" + id + ", nom=" + nom + ", resultat=" + resultat + ", date=" + date + "]";
@@ -47,12 +53,19 @@ public class Analyse implements Serializable{
 	public void setResultat(String resultat) {
 		this.resultat = resultat;
 	}
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
+	public Dossier_Medical getDossier() {
+		return dossier;
+	}
+	public void setDossier(Dossier_Medical dossier) {
+		this.dossier = dossier;
+	}
+
 	
 
 }

@@ -146,6 +146,11 @@ public class PatientService implements PatientServiceInterface {
 		return null;
 	}
 	
+	public Long findDossierByIdPatient(Long id) {
+		return patRep.findDossier(id);
+	}
+
+	
 
 	
 

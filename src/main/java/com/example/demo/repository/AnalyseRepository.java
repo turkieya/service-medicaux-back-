@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.example.demo.models.Horaire;
+import com.example.demo.models.Analyse;
 
-public interface HoraireRepository extends JpaRepository<Horaire,Long> {
+public interface AnalyseRepository extends JpaRepository<Analyse, Long> {
+	
+	@Query("select a from Analyse a where a.dossier.id=:id")
+	List<Analyse> findAnalysesId(@Param("id") Long id);
 
-	@Query("select h from Horaire h where h.medecin.id=:id")
-	List<Horaire> findHorairesId(@Param("id") Long id);
 }

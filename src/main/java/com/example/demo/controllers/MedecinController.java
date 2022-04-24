@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Medecin;
@@ -22,15 +23,15 @@ public class MedecinController implements MedecinRest {
 	private JavaMailSender javaMailSender;
 
 	@Override
-	public ResponseEntity<String> signup(Map<String, String> requestMap) {
+	public ResponseEntity<String> signup(@RequestBody Medecin medecin) {
 	
 		try {
 			SimpleMailMessage msg = new SimpleMailMessage();
-		    msg.setTo(requestMap.get("email"));
+		    msg.setTo(medecin.getEmail());
 	        msg.setSubject("Compte Ajouté");
-		    msg.setText("Pour acceder a votre compte sur MEDICO vous utilisez votre email  "+ requestMap.get("email")+" ,votre mot de passe est "+requestMap.get("password"));
+		    msg.setText("Pour acceder a votre compte sur MEDICO vous utilisez votre email  "+ medecin.getEmail()+" ,votre mot de passe est "+medecin.getPassword());
 		    javaMailSender.send(msg);
-			return medServ.signup(requestMap);
+			return medServ.signup(medecin);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}

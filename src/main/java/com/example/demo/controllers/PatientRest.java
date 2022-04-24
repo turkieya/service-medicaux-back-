@@ -26,4 +26,7 @@ public interface PatientRest {
 
 	@GetMapping(path="/show/{id}")
 	public Patient findPatientById (@PathVariable long id) ;
+	
+	@GetMapping(path="/get/{id}")
+	public Long getPatientByDossierId(@PathVariable long id);
 }

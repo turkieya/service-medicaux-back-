@@ -84,5 +84,9 @@ public class PatientController implements PatientRest {
 
 	}*/
 
+	@Override
+	public Long getPatientByDossierId(@PathVariable long id) {
+		return patServ.findDossierByIdPatient(id);
+	}
 
 }

@@ -15,4 +15,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long>{
 	@Query("select p from Patient p where p.email =:email and p.password =:password")
 	Patient findByEmailAndPassword (@Param("email") String email,@Param("password") String password);
 	Patient findByEmail(@Param("email") String email);
+	
+	@Query("select m.dossier.id from Patient m where m.id=:id")
+	public Long findDossier(@Param("id") Long id);
 }

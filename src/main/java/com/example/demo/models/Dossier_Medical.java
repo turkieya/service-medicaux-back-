@@ -1,5 +1,6 @@
 package com.example.demo.models;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Embedded;
@@ -7,58 +8,81 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="dossier")
 public class Dossier_Medical implements Serializable{
-	 @Id
-	  @GeneratedValue(strategy=GenerationType.IDENTITY)
-	  private Long id;
-	 @Embedded
-	 private Set<Antecedent> antecedents;
-	 @Override
-	public String toString() {
-		return "Dossier_Medical [id=" + id + ", antecedents=" + antecedents + ", analyses=" + analyses
-				+ ", consultations=" + consultations + ", patient=" + patient + "]";
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+	 
+	@OneToMany(mappedBy="dossier")
+	@JsonIgnore
+	private List<Antecedent> antecedents;
+	
+	@OneToMany(mappedBy="dossier")
+	@JsonIgnore
+	private List<Analyse> analyses;
+	
+	@OneToMany(mappedBy="dossier")
+	@JsonIgnore
+	private List<Consultation> consultations;
+	
+	@OneToOne(mappedBy = "dossier")
+	private Patient patient;
+
+	public Dossier_Medical() {
+		super();
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Set<Antecedent> getAntecedents() {
+
+	public List<Antecedent> getAntecedents() {
 		return antecedents;
 	}
-	public void setAntecedents(Set<Antecedent> antecedents) {
+
+	public void setAntecedents(List<Antecedent> antecedents) {
 		this.antecedents = antecedents;
 	}
-	public Set<Analyse> getAnalyses() {
+
+	public List<Analyse> getAnalyses() {
 		return analyses;
 	}
-	public void setAnalyses(Set<Analyse> analyses) {
+
+	public void setAnalyses(List<Analyse> analyses) {
 		this.analyses = analyses;
 	}
-	public Set<Consultation> getConsultations() {
+
+	public List<Consultation> getConsultations() {
 		return consultations;
 	}
-	public void setConsultations(Set<Consultation> consultations) {
+
+	public void setConsultations(List<Consultation> consultations) {
 		this.consultations = consultations;
 	}
+
 	public Patient getPatient() {
 		return patient;
 	}
+
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
-	@Embedded
-	 private Set<Analyse> analyses;
-	 @Embedded
-	 private Set<Consultation> consultations;
-	 @OneToOne(mappedBy = "dossier")
-		private Patient patient;
+	
+	 
+	
 	
 
 }

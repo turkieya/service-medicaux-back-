@@ -1,26 +1,27 @@
 package com.example.demo.services;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.utils.medicUtils;
-import com.example.demo.models.Categorie;
+
+import lombok.extern.log4j.Log4j2;
+
+import com.example.demo.models.Dossier_Medical;
 import com.example.demo.models.Login;
 import com.example.demo.models.Patient;
+import com.example.demo.repository.DossierRepository;
 import com.example.demo.repository.LoginRepository;
 import com.example.demo.repository.PatientRepository;
-
+@Log4j2
 @Service
 public class PatientService implements PatientServiceInterface {
 
@@ -33,56 +34,64 @@ public class PatientService implements PatientServiceInterface {
 	@Autowired
 	LoginRepository logRepo;
 	
+	@Autowired
+	DossierRepository dossRep;
+	
 
-	public ResponseEntity<String> signup(Map<String, String> requestMap){
-		//log.info("Inside signup()",requestMap);
+	
+	public ResponseEntity<String> signup(@RequestBody Patient patient){
+		log.info("Inside signup() patient",patient);
 		try {
-		if(validateSignUpMap(requestMap)) {
-			Patient patient = patientRepo.findByEmail(requestMap.get("email"));
-			if(Objects.isNull(patient)) {
-				patientRepo.save(getPatientFromMap(requestMap));
-				logRepo.save(getUserFromMap(requestMap));
+			Patient pat = patientRepo.findByEmail(patient.getEmail());
+			System.out.println(pat);
+			if(Objects.isNull(pat)) {
+				log.info("Inside if patient",patient);
+				patientRepo.save(getPatientInfo(patient));
+				log.info("getPat()",patient);
+				logRepo.save(getUser(patient));
+				log.info("getUser()",patient);
+
 				return medicUtils.getResponseEntity("Succesfully Registered!", HttpStatus.OK);
 			}else {
 				return medicUtils.getResponseEntity("Email already exists !", HttpStatus.BAD_REQUEST);
 			}
-		
-		}
-		else {
-			return medicUtils.getResponseEntity("Invalid Data", HttpStatus.BAD_REQUEST);
-		}
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
 		return medicUtils.getResponseEntity("Something is wrong", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	private boolean validateSignUpMap(Map<String, String> requestMap) {
-		if(requestMap.containsKey("nom")&& requestMap.containsKey("prenom") && requestMap.containsKey("email") && requestMap.containsKey("password")) {
-			return true;
-		}
-		return false;
-	}
-
-	private Patient getPatientFromMap(Map<String, String> requestMap) {
+	private Patient getPatientInfo(@RequestBody Patient pat) {
 		Patient patient = new Patient();
-		patient.setNom(requestMap.get("nom"));
-		patient.setPrenom(requestMap.get("prenom"));
-		patient.setEmail(requestMap.get("email"));
+		patient.setNom(pat.getNom());
+		patient.setPrenom(pat.getPrenom());
+		patient.setEmail(pat.getEmail());
 		//patient.setPassword(requestMap.get("password"));
-		patient.setPassword(requestMap.get("password"));
+		Random random = new Random();
+		Long id=random.nextLong();
+		System.out.println(id);
+		patient.setId(id);
+		patient.setPassword(pat.getPassword());
+		patient.setDate_naiss(pat.getDate_naiss());
+		patient.setSexe(pat.getSexe());
+		patient.setTel(pat.getTel());
+		//Long idDoss=random.nextLong();
+		//System.out.println(idDoss);
+		//dossRep.createDoss(idDoss);
+		//System.out.println(doss);
+		//patient.setDossier(doss);
+		//patient.setDossier(doss);
 		return patient;
 	}
-	private Login getUserFromMap(Map<String, String> requestMap) {
+	private Login getUser(@RequestBody Patient pat) {
 		Login user = new Login();
-		user.setEmail(requestMap.get("email"));
-		//patient.setPassword(requestMap.get("password"));
-		user.setPassword(requestMap.get("password"));
-		user.setUsername(requestMap.get("nom")+" "+requestMap.get("prenom"));
+		user.setEmail(pat.getEmail());
+		user.setPassword(pat.getPassword());
+		user.setUsername(pat.getNom()+" "+pat.getPrenom());
 		//user.setPassword(encoder.encode(requestMap.get("password")));
 
 		user.setRole("patient");
-		String email=requestMap.get("email");
+		String email=pat.getEmail();
 		System.out.println(email);
 		long n=logRepo.findId(email);
 		System.out.println(n);

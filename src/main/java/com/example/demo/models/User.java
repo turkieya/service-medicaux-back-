@@ -11,7 +11,6 @@ import javax.persistence.MappedSuperclass;
 public class User implements Serializable{
 
 	 @Id
-	 @GeneratedValue(strategy=GenerationType.IDENTITY)
 	 protected Long id;
 	 
 	 @Column(name = "nom")
@@ -19,6 +18,15 @@ public class User implements Serializable{
 	 
 	 @Column(name = "prenom")
       protected String prenom;
+	 
+		@Column(name="email")
+		  protected String email;
+		 
+		 @Column(name = "password")
+	     protected String password ; 
+		 
+		 @Column(name = "sexe")
+	     protected String sexe;
 	 
 	 public User( String nom, String prenom, String email, String password, String sexe) {
 		super();
@@ -29,14 +37,6 @@ public class User implements Serializable{
 		this.sexe = sexe;
 	}
 	
-	@Column(name="email")
-	  protected String email;
-	 
-	 @Column(name = "password")
-     protected String password ; 
-	 
-	 @Column(name = "sexe")
-     protected String sexe;
 	 
 	public Long getId() {
 		return id;

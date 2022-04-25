@@ -33,6 +33,10 @@ public class Medecin extends User implements Serializable{
 	@JsonIgnore
 	private List<Horaire> horaires;
 	
+	@OneToMany(mappedBy="med")
+	@JsonIgnore
+	private List<Rendez_vous> rdv;
+	
 	@ManyToMany(cascade = CascadeType.ALL, mappedBy="med")
     private Set<Patient> pat;
 	
@@ -100,7 +104,16 @@ public class Medecin extends User implements Serializable{
 
 	public void setCat(Categorie cat) {
 		this.cat = cat;
-	} 
+	}
+
+	public List<Rendez_vous> getRdv() {
+		return rdv;
+	}
+
+	public void setRdv(List<Rendez_vous> rdv) {
+		this.rdv = rdv;
+	}
+
 
 	 
 }

@@ -9,6 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Categorie;
@@ -41,15 +42,15 @@ public class PatientController implements PatientRest {
 	
 	@CrossOrigin(origins= "http://localhost:4200")
 	@Override
-	public ResponseEntity<String> signup(Map<String, String> requestMap) {
+	public ResponseEntity<String> signup(@RequestBody Patient patient) {
 	
 		try {
 			SimpleMailMessage msg = new SimpleMailMessage();
-		    msg.setTo(requestMap.get("email"));
+		    msg.setTo(patient.getEmail());
 	        msg.setSubject("Compte Ajouté");
-		    msg.setText("Pour acceder a votre compte sur MEDICO vous utilisez votre email  "+ requestMap.get("email")+" ,votre mot de passe est "+requestMap.get("password"));
+		    msg.setText("Pour acceder a votre compte sur MEDICO vous utilisez votre email  "+ patient.getEmail()+" ,votre mot de passe est "+patient.getPassword());
 		    javaMailSender.send(msg);
-			return patServ.signup(requestMap);
+			return patServ.signup(patient);
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}

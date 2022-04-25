@@ -10,23 +10,25 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.models.Analyse;
+import com.example.demo.models.Antecedent;
 
-@RequestMapping("/analyse")
-public interface AnalyseRest {
+@RequestMapping("/antecedent")
+public interface AntecedentReset {
 
 	@PostMapping(path="/add/{idDoss}")
-	public Analyse addAnalyse(@RequestBody Analyse a,@PathVariable long idDoss);
+	public Antecedent addAntecedent(@RequestBody Antecedent a,@PathVariable long idDoss);
 	
-	@GetMapping(path = "show_analyses/{id}")
-	public List<Analyse> findAllAnalysesByDossier (@PathVariable Long id) ;
+	@GetMapping(path = "show_antecedents/{id}")
+	public List<Antecedent> findAllAntecedentsByDossier (@PathVariable Long id) ;
 	
 	@PutMapping(path="/edit")
-	public void editAnalyse (@RequestBody Analyse a);
+	public void editAntecedentEntity (@RequestBody Antecedent a);
 	
-	/*@DeleteMapping("/delete/{id}")
-	public void deleteAnalyseById ( @PathVariable Long id);
+	@DeleteMapping("/delete/{id}")
+	public void deleteAntecedentById ( @PathVariable Long id);
 	
 	@GetMapping(path = "show/{id}")
-	public Analyse findAnalyseById (@PathVariable long id);*/
+	public  Antecedent getbyId (@PathVariable long id);
+	
 }
+

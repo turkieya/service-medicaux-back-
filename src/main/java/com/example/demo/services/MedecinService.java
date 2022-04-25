@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.example.demo.models.Categorie;
 import com.example.demo.models.Login;
 import com.example.demo.models.Medecin;
-import com.example.demo.models.Patient;
 import com.example.demo.repository.CategorieRepository;
 import com.example.demo.repository.LoginRepository;
 import com.example.demo.repository.MedecinRepository;
-import com.example.demo.repository.PatientRepository;
 import com.example.demo.utils.medicUtils;
 
+import lombok.extern.log4j.Log4j2;
+@Log4j2
 @Service
 public class MedecinService implements MedecinServiceInterface {
 
@@ -35,7 +35,7 @@ public class MedecinService implements MedecinServiceInterface {
 	CategorieRepository catRepo;
 
 	public ResponseEntity<String> signup(@RequestBody Medecin medecin){
-		//log.info("Inside signup()",requestMap);
+		log.info("Inside signup() medecin",medecin);
 		try {
 		
 			Medecin medcin = medRepo.findByEmail(medecin.getEmail());
@@ -66,11 +66,11 @@ public class MedecinService implements MedecinServiceInterface {
 		System.out.println(id);
 		medecin.setId(id);
 		medecin.setPassword(med.getPassword());
+		
 		medecin.setMatricule(med.getMatricule());
 		medecin.setPrix_consult(med.getPrix_consult());
 		medecin.setSexe(med.getSexe());
 		medecin.setSpecialite(med.getSpecialite());
-		System.out.println("teeeeeeest");
 		System.out.println(med.getSpecialite());
 		 
 		Categorie cat=catRepo.findCategorieByNom(med.getSpecialite());
@@ -84,10 +84,9 @@ public class MedecinService implements MedecinServiceInterface {
 	private Login getUser(@RequestBody Medecin med) {
 		Login user = new Login();
 		user.setEmail(med.getEmail());
-		//patient.setPassword(requestMap.get("password"));
 		user.setPassword(med.getPassword());
 		//user.setPassword(encoder.encode(requestMap.get("password")));
-
+		user.setUsername(med.getNom()+" "+med.getPrenom());
 		user.setRole("medecin");
 		String email=med.getEmail();
 		System.out.println(email);
